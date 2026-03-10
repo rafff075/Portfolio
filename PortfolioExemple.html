@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio BTS SIO SLAM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --bg-alt: #111827;
+            --accent: #3b82f6;
+            --accent-soft: #1d4ed8;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --card: #020617;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(16px);
+            background: linear-gradient(to right, rgba(15,23,42,0.95), rgba(15,23,42,0.7));
+            border-bottom: 1px solid rgba(148,163,184,0.2);
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-title {
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        .nav-links a {
+            margin-left: 1.2rem;
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 3.5rem;
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.1rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: .8rem;
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .tag {
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.4);
+            padding: .25rem .7rem;
+            font-size: .75rem;
+            color: var(--muted);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: .55rem 1.2rem;
+            font-size: .85rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all .15s ease-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            color: white;
+            border-color: rgba(191,219,254,0.4);
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border-color: rgba(148,163,184,0.5);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+            border-color: var(--accent);
+        }
+
+        .hero-card {
+            background: radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 55%),
+                        radial-gradient(circle at bottom right, rgba(236,72,153,0.18), transparent 55%),
+                        var(--bg-alt);
+            border-radius: 1.3rem;
+            padding: 1.6rem;
+            border: 1px solid rgba(148,163,184,0.35);
+            box-shadow: 0 22px 45px rgba(15,23,42,0.9);
+        }
+
+        .hero-card h2 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .hero-card p {
+            font-size: .9rem;
+            margin-bottom: .8rem;
+        }
+
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: .8rem;
+            margin-top: 1.2rem;
+            font-size: .8rem;
+        }
+
+        .hero-meta div {
+            padding: .6rem .7rem;
+            border-radius: .7rem;
+            background: rgba(15,23,42,0.8);
+            border: 1px solid rgba(148,163,184,0.3);
+        }
+
+        .hero-meta span {
+            display: block;
+            color: var(--muted);
+            font-size: .75rem;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 2.8rem;
+        }
+
+        h2.section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Grids & cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 1.3rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(15,23,42,0.95), rgba(15,23,42,0.9));
+            border-radius: 1rem;
+            padding: 1.1rem 1.2rem;
+            border: 1px solid rgba(30,64,175,0.6);
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            margin-bottom: .4rem;
+        }
+
+        .card small {
+            color: var(--muted);
+            font-size: .8rem;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin-top: .6rem;
+        }
+
+        .pill {
+            border-radius: 999px;
+            padding: .18rem .55rem;
+            font-size: .7rem;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.4);
+            color: var(--muted);
+        }
+
+        ul {
+            list-style: none;
+            margin-top: .5rem;
+            font-size: .88rem;
+        }
+
+        ul li::before {
+            content: "• ";
+            color: var(--accent);
+        }
+
+        /* Contact */
+        .contact {
+            display: grid;
+            grid-template-columns: minmax(0,2fr) minmax(0,3fr);
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .contact-info p {
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        .contact-links a {
+            display: inline-block;
+            margin-right: 1rem;
+            margin-top: .5rem;
+            font-size: .9rem;
+        }
+
+        footer {
+            border-top: 1px solid rgba(148,163,184,0.25);
+            padding: 1.2rem 1.5rem 1.8rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            font-size: .8rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: minmax(0,1fr);
+            }
+            .hero-card {
+                order: -1;
+            }
+            .grid-2 {
+                grid-template-columns: minmax(0,1fr);
+            }
+            .contact {
+                grid-template-columns: minmax(0,1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: .4rem;
+            }
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="nav">
+        <div class="nav-title">Portfolio BTS SIO SLAM</div>
+        <div class="nav-links">
+            <a href="#apropos">À propos</a>
+            <a href="#competences">Compétences</a>
+            <a href="#projets">Projets</a>
+            <a href="#stages">Stages</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <!-- HERO -->
+    <section class="hero" id="apropos">
+        <div>
+            <h1 class="hero-title">Étudiant BTS SIO – Option SLAM</h1>
+            <p class="hero-sub">
+                Développement d’applications, bases de données et solutions logicielles pour les organisations.
+                J’aime transformer un besoin métier en application claire, fiable et maintenable.
+            </p>
+
+            <div class="hero-tags">
+                <span class="tag">BTS SIO</span>
+                <span class="tag">Option SLAM</span>
+                <span class="tag">Développement</span>
+                <span class="tag">Bases de données</span>
+            </div>
+
+            <div class="hero-actions">
+                <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+                <a href="#contact" class="btn btn-ghost">Me contacter</a>
+            </div>
+        </div>
+
+        <aside class="hero-card">
+            <h2>Profil</h2>
+            <p>
+                Étudiant en <strong>BTS Services Informatiques aux Organisations</strong>, option
+                <strong>Solutions Logicielles et Applications Métiers</strong>.
+            </p>
+            <p>
+                Curieux, rigoureux et orienté solution, je travaille autant la technique que la compréhension
+                des besoins utilisateurs.
+            </p>
+
+            <div class="hero-meta">
+                <div>
+                    <span>Spécialité</span>
+                    Développement d’applications (SLAM)
+                </div>
+                <div>
+                    <span>Objectif</span>
+                    Devenir développeur logiciel / web
+                </div>
+                <div>
+                    <span>Forces</span>
+                    Organisation, persévérance, code propre
+                </div>
+                <div>
+                    <span>Suite d’études</span>
+                    Licence pro / Bachelor informatique
+                </div>
+            </div>
+        </aside>
+    </section>
+
+    <!-- COMPETENCES -->
+    <section id="competences">
+        <h2 class="section-title">Compétences techniques</h2>
+        <p class="section-sub">
+            Un socle solide en développement, bases de données, outils professionnels et premières notions de cybersécurité.
+        </p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>Développement</h3>
+                <small>Langages & concepts</small>
+                <ul>
+                    <li>Java / JavaFX, POO, architecture MVC</li>
+                    <li>Python (scripts, automatisation)</li>
+                    <li>PHP / bases de Symfony</li>
+                    <li>HTML / CSS / JavaScript</li>
+                    <li>Notions d’API REST</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">POO</span>
+                    <span class="pill">MVC</span>
+                    <span class="pill">Interfaces graphiques</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Bases de données</h3>
+                <small>Conception & requêtes</small>
+                <ul>
+                    <li>SQL (MySQL, MariaDB, PostgreSQL)</li>
+                    <li>Conception MCD / MLD / MPD</li>
+                    <li>Jointures, sous-requêtes, agrégats</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">SQL</span>
+                    <span class="pill">Modélisation</span>
+                    <span class="pill">Optimisation requêtes</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Outils & environnements</h3>
+                <small>Pratiques professionnelles</small>
+                <ul>
+                    <li>Git / GitHub (versionning, branches)</li>
+                    <li>Linux (Ubuntu, Kali), VirtualBox</li>
+                    <li>VS Code, IntelliJ, NetBeans</li>
+                    <li>WordPress (installation, BDD, hébergement)</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">Git</span>
+                    <span class="pill">Linux</span>
+                    <span class="pill">Virtualisation</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Cybersécurité (bases)</h3>
+                <small>Laboratoires & découverte</small>
+                <ul>
+                    <li>Lab Kali Linux + Metasploitable 2</li>
+                    <li>Scan de ports (Nmap)</li>
+                    <li>Découverte de services vulnérables</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">Kali</span>
+                    <span class="pill">Nmap</span>
+                    <span class="pill">Réseau</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJETS -->
+    <section id="projets">
+        <h2 class="section-title">Projets réalisés</h2>
+        <p class="section-sub">
+            Quelques projets représentatifs de mon travail en BTS SIO option SLAM.
+        </p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>Application de gestion – JavaFX & MySQL</h3>
+                <small>CRUD complet avec interface graphique</small>
+                <ul>
+                    <li>Gestion d’éléments : ajout, modification, suppression</li>
+                    <li>Connexion sécurisée à une base MySQL</li>
+                    <li>Architecture MVC pour un code maintenable</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">JavaFX</span>
+                    <span class="pill">JDBC</span>
+                    <span class="pill">MVC</span>
+                    <span class="pill">MySQL</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Site vitrine WordPress</h3>
+                <small>Site pour une entreprise locale</small>
+                <ul>
+                    <li>Installation WordPress + configuration hébergeur</li>
+                    <li>Menus, ancres, pages produits, responsive</li>
+                    <li>Gestion de la base de données WordPress</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">WordPress</span>
+                    <span class="pill">OVH / hébergement</span>
+                    <span class="pill">UX</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Script Python de génération de mots de passe</h3>
+                <small>Automatisation & sécurité</small>
+                <ul>
+                    <li>Choix de la longueur et du type de caractères</li>
+                    <li>Mélange lettres, chiffres, symboles</li>
+                    <li>Interface en ligne de commande simple</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">Python</span>
+                    <span class="pill">Sécurité</span>
+                    <span class="pill">Automatisation</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Lab cybersécurité – Kali & Metasploitable 2</h3>
+                <small>Découverte de vulnérabilités</small>
+                <ul>
+                    <li>Configuration réseau interne sous VirtualBox</li>
+                    <li>Scan de ports et services exposés</li>
+                    <li>Identification de failles simples</li>
+                </ul>
+                <div class="pill-row">
+                    <span class="pill">Kali</span>
+                    <span class="pill">Metasploitable</span>
+                    <span class="pill">Réseau</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGES -->
+    <section id="stages">
+        <h2 class="section-title">Stages en entreprise</h2>
+        <p class="section-sub">
+            Expériences professionnelles réalisées dans le cadre du BTS SIO.
+        </p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>Stage 1 – 1ère année</h3>
+                <small>Entreprise : à compléter</small>
+                <ul>
+                    <li>Support utilisateur et maintenance de premier niveau</li>
+                    <li>Participation à la gestion du parc informatique</li>
+                    <li>Scripts simples pour automatiser des tâches</li>
+                    <li>Premiers pas dans la documentation technique</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Stage 2 – 2ème année</h3>
+                <small>Entreprise : à compléter</small>
+                <ul>
+                    <li>Participation à un projet logiciel en équipe</li>
+                    <li>Développement de fonctionnalités spécifiques</li>
+                    <li>Tests, corrections et validation</li>
+                    <li>Rédaction de documentation utilisateur / technique</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact">
+            <div class="contact-info">
+                <p>
+                    Intéressé(e) par mon profil ou mes projets ?<br>
+                    N’hésitez pas à me contacter pour un stage, une alternance ou un futur poste.
+                </p>
+            </div>
+            <div class="contact-links">
+                <p><strong>Email :</strong> ton.email@example.com</p>
+                <p><strong>GitHub :</strong> <a href="#" target="_blank">github.com/ton-profil</a></p>
+                <p><strong>LinkedIn :</strong> <a href="#" target="_blank">linkedin.com/in/ton-profil</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    Portfolio BTS SIO SLAM – à personnaliser avec ton nom, tes projets et tes liens.
+</footer>
+
+</body>
+</html>
